@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var react = require('react');
+var router = react.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
