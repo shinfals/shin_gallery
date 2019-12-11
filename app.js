@@ -17,7 +17,7 @@ app.engine('jsx', require('express-react-views').createEngine());
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyPaser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
