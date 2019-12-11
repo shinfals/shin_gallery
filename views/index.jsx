@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to Underground!</p>
-    <p>Thanks!</p>
-  </body>
-</html>
+var React = require('react');
+var Layout = require('./Layout');
+
+class Index extends React.Component{
+  render(){
+    return(
+      <Layout title={this.props.title}>
+        <div>
+          <h2>{this.props.title}</h2>
+        </div>
+      </Layout>
+    );
+  }
+}
+
+module.exports = Index;
