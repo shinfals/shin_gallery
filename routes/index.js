@@ -12,7 +12,8 @@ var con = mysql.createConnection({
 /* GET home page. */
 router.get('/', function(req, res, next) {
   //sql query add
-  con.query('select * from member', function(error, results, fields){
+  var query_str = 'select * from member'
+  con.query(query_str, function(error, results, fields){
     if (error) throw error;
     console.log(results);
     res.render('index', {
