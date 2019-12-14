@@ -9,13 +9,6 @@ var mysql = require('mysql');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-var con = mysql.createConnection({
-  host: 'my-site-db',
-  user: 'root',
-  password: 'root',
-  database: 'my-site-db'
-});
-
 var app = express();
 
 // view engine setup
@@ -31,17 +24,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
-//sql connection test
-con.connect(function(err){
-  if (err) throw err;
-  console.log('Connected');
-  var sql = 'CREATE TABLE useraccount (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL)';
-  con.query(sql, function(err, result){
-    if (err) throw err;
-    console.log('tabele created');
-  });
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
