@@ -7,9 +7,9 @@ class Index extends React.Component{
       <Layout title={this.props.title}>
         <div>
           <h2>{this.props.title}</h2>
-          {this.props.content.map(function(index){
+          /*{this.props.content.map(function(index){
             return <h2>{index.id},{index.name},{index.age},{index.sex}</h2>;
-          })}
+          })}*/
         </div>
       </Layout>
     );
