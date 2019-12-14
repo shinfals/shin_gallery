@@ -4,22 +4,38 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
-var mysql = require('mysql');
-var bcrypt = require('bcrypt');
+var mysql = require('mysql2');
+//var bcrypt = require('bcrypt');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
+var Sequelize = require('sequelize');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-var con = mysql.createConnection({
+/*var con = mysql.createConnection({
   host: 'my-site-db',
   user: 'root',
   password: 'root',
   database: 'my-site-db'
+});*/
+
+var sequelize = new Sequelize('nodeTest','root','root',{dialect:'mysql'});
+var testTable = sequelize.define('test_table',{
+  id:{
+    type: Sequelize.INTEGER,
+    primaryKey: true
+  },
+  name:{
+    type: Sequelize.STRING
+  }
+},{
+  freezeTableName: true,
+  timestamps: false
 });
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,18 +54,9 @@ app.use(passport.initialize());
 app.use('/users', usersRouter);
 
 //sql query add
-app.use('/',function(req, res, next){
-  var salt_rounds = 10;
-  var id = 5;
-  var name = '\'shinshin\'';
-  var age = 20;
-  var sex = '\'man\'';
-  var password_plain = '\'PassPassPass\'';
-  var password = bcrypt.hashSync(password_plain, salt_rounds);
-  var query_str = `insert into member values (${id}, ${name}, ${age}, ${sex}, ${password})`;
-  con.query(query_str, function(error, results, fields){
-    if (error) throw error;
-    console.log('insert success!');
+app.get('/',function(req, res, next){
+  testTable.findAll().then(results => {
+    res.send(results);
   });
 });
 
