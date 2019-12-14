@@ -5,6 +5,9 @@ var logger = require('morgan');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
+var bcrypt = require('bcrypt');
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -29,16 +32,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(passport.initialize());
+
 //app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 //sql query add
 app.use('/',function(req, res, next){
+  var salt_rounds = 10;
   var id = 5;
   var name = '\'shinshin\'';
   var age = 20;
   var sex = '\'man\'';
-  var password = '\'PassPassPass\'';
+  var password_plain = '\'PassPassPass\'';
+  var password = bcrypt.hashSync(password_plain, salt_rounds);
   var query_str = `insert into member values (${id}, ${name}, ${age}, ${sex}, ${password})`;
   con.query(query_str, function(error, results, fields){
     if (error) throw error;
