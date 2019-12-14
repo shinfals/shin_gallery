@@ -29,15 +29,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 //sql query add
 app.use('/',function(req, res, next){
-  var query_str = 'select * from member'
+  var id = 5;
+  var name = '\'shinshin\'';
+  var age = 20;
+  var sex = '\'man\'';
+  var password = '\'PassPassPass\'';
+  var query_str = `insert into member values (${id}, ${name}, ${age}, ${sex}, ${password})`;
   con.query(query_str, function(error, results, fields){
     if (error) throw error;
-    res.render('index',{content:results});
+    console.log('insert success!');
   });
 });
 
