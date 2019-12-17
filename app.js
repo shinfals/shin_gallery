@@ -15,13 +15,6 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-/*var con = mysql.createConnection({
-  host: 'my-site-db',
-  user: 'root',
-  password: 'root',
-  database: 'my-site-db'
-});*/
-
 var sequelize = new Sequelize('nodeTest','root','root',{dialect:'mysql'});
 var testTable = sequelize.define('test_table',{
   id:{
